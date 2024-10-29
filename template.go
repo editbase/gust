@@ -1,5 +1,7 @@
-// template.go
-package gust
+// /template.go
+// Template manages HTML template parsing and rendering
+
+package stardust
 
 import (
 	"html/template"
@@ -9,17 +11,19 @@ import (
 )
 
 type Template struct {
-	dir       string
-	templates *template.Template
-	mutex     sync.RWMutex
+	dir       string             // template directory
+	templates *template.Template // parsed templates cache
+	mutex     sync.RWMutex       // ensures thread-safe template operations
 }
 
+// NewTemplate creates a new Template instance for the specified directory
 func NewTemplate(dir string) *Template {
 	return &Template{
 		dir: dir,
 	}
 }
 
+// Load parses all HTML templates in the template directory
 func (t *Template) Load() error {
 	t.mutex.Lock()
 	defer t.mutex.Unlock()
@@ -35,6 +39,7 @@ func (t *Template) Load() error {
 	return nil
 }
 
+// Render executes a template with the given name and data
 func (t *Template) Render(w http.ResponseWriter, name string, data interface{}) error {
 	t.mutex.RLock()
 	defer t.mutex.RUnlock()

@@ -5,16 +5,16 @@ package main
 import (
 	"log"
 
-	"github.com/editbase/gust"
+	"github.com/editbase/stardust"
 )
 
 func main() {
-	app := gust.New().
+	app := stardust.New().
 		WithPort("3000").
 		WithTemplateDir("./templates").
 		WithStaticDir("./static")
 
-	app.GET("/", func(c *gust.Context) error {
+	app.GET("/", func(c *stardust.Context) error {
 		return c.Render("index.html", nil)
 	})
 

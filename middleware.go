@@ -1,5 +1,7 @@
-// middleware.go
-package gust
+// /middleware.go
+// MiddlewareFunc defines the middleware function signature
+
+package stardust
 
 import (
 	"fmt"
@@ -7,8 +9,10 @@ import (
 	"time"
 )
 
+// Takes a handler function and returns a wrapped handler function
 type MiddlewareFunc func(next HandlerFunc) HandlerFunc
 
+// Logger returns a middleware that logs request details and timing
 func Logger() MiddlewareFunc {
 	return func(next HandlerFunc) HandlerFunc {
 		return func(c *Context) error {
@@ -20,6 +24,7 @@ func Logger() MiddlewareFunc {
 	}
 }
 
+// Recover returns a middleware that recovers from panics in handlers
 func Recover() MiddlewareFunc {
 	return func(next HandlerFunc) HandlerFunc {
 		return func(c *Context) (err error) {

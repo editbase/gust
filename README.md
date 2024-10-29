@@ -1,5 +1,5 @@
-# 🪁 Gust
-Gust is a lightweight, server-driven web framework for Go that seamlessly integrates with HTMX. It provides a modern approach to building dynamic web applications while maintaining the simplicity and performance of Go.
+# 🌠 Stardust
+Stardust is a lightweight, server-driven web framework for Go that seamlessly integrates with HTMX. It provides a modern approach to building dynamic web applications while maintaining the simplicity and performance of Go.
 
 ## Features
 - 🚀 Zero-JS by default (only HTMX required)
@@ -14,23 +14,23 @@ Gust is a lightweight, server-driven web framework for Go that seamlessly integr
 ```go
 package main
 
-import "github.com/editbase/gust"
+import "github.com/editbase/stardust"
 
 func main() {
-    app := gust.New().
+    app := stardust.New().
         WithPort("3000").
         WithTemplateDir("./templates").
         WithStaticDir("./static")
 
-    app.GET("/", func(c *gust.Context) error {
+    app.GET("/", func(c *stardust.Context) error {
         return c.Render("index.html", nil)
     })
 
-    app.POST("/api/users", func(c *gust.Context) error {
+    app.POST("/api/users", func(c *stardust.Context) error {
         // Handle user creation
     })
 
-    app.Use(gust.Logger(), gust.Recover())
+    app.Use(stardust.Logger(), stardust.Recover())
 
     app.Run()
 }
@@ -38,7 +38,7 @@ func main() {
 
 ## Package Structure
 ```text
-github.com/editbase/gust/
+github.com/editbase/stardust/
 ├── examples/
 │   ├── blog/
 │   └── saas/

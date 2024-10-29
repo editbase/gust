@@ -1,5 +1,7 @@
-// server.go
-package gust
+// /server.go
+// Server manages the HTTP server and request handling
+
+package stardust
 
 import (
 	"fmt"
@@ -7,10 +9,11 @@ import (
 )
 
 type Server struct {
-	app        *App
-	httpServer *http.Server
+	app        *App         // reference to the main application instance
+	httpServer *http.Server // underlying HTTP server instance
 }
 
+// newServer creates a new Server instance with configured HTTP server
 func newServer(app *App) *Server {
 	return &Server{
 		app: app,
@@ -20,6 +23,7 @@ func newServer(app *App) *Server {
 	}
 }
 
+// start initializes and starts the HTTP server
 func (s *Server) start() error {
 	// Set up the main handler
 	s.httpServer.Handler = s.buildHandler()
@@ -28,6 +32,7 @@ func (s *Server) start() error {
 	return s.httpServer.ListenAndServe()
 }
 
+// buildHandler constructs the main HTTP handler with middleware and routes
 func (s *Server) buildHandler() http.Handler {
 	// Create the main mux
 	mux := http.NewServeMux()
@@ -50,6 +55,7 @@ func (s *Server) buildHandler() http.Handler {
 	return handler
 }
 
+// handleRequest processes incoming HTTP requests
 func (s *Server) handleRequest(w http.ResponseWriter, r *http.Request) {
 	// Create context for the request
 	ctx := &Context{
@@ -71,6 +77,7 @@ func (s *Server) handleRequest(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// wrapMiddleware applies middleware to an http.Handler
 func (s *Server) wrapMiddleware(handler http.Handler, middleware MiddlewareFunc) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := &Context{
